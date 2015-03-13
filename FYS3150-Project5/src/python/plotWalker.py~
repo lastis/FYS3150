@@ -1,0 +1,71 @@
+from scitools.std import *
+from StringIO import StringIO
+
+T0_01 = loadtxt('../cpp/1DT0_01ProbWalk.dat')
+T0_1 	= loadtxt('../cpp/1DT0_1ProbWalk.dat')
+T0_5 	= loadtxt('../cpp/1DT0_5ProbWalk.dat')
+T0_01ug = loadtxt('../cpp/ug1DT0_01ProbWalk.dat')
+T0_1ug 	= loadtxt('../cpp/ug1DT0_1ProbWalk.dat')
+T0_5ug 	= loadtxt('../cpp/ug1DT0_5ProbWalk.dat')
+
+x1,probx1,proby1 = T0_01.T
+x2,probx2,proby2 = T0_1.T
+x3,probx3,proby3 = T0_5.T
+x4,probx4,proby4 = T0_01ug.T
+x5,probx5,proby5 = T0_1ug.T
+x6,probx6,proby6 = T0_5ug.T
+def anal1d(x,t):
+    temp = zeros(len(x))
+    for j in range(len(x)):
+        for n in range(1000):
+            temp[j] += exp(-(n+1)*(n+1)*pi*pi*t)*sin((n+1)*pi*x[j])/float(n+1)
+    return 1-x-2/pi*temp
+
+an1 = anal1d(x1,0.01)
+
+an2 = anal1d(x2,0.1)
+
+an3 = anal1d(x3,0.5)
+
+probx1 = probx1/max(probx1)
+probx2 = probx2/max(probx2)
+probx3 = probx3/max(probx3)
+probx4 = probx4/max(probx4)
+probx5 = probx5/max(probx5)
+probx6 = probx6/max(probx6)
+
+
+proby1 = proby1/max(proby1)
+proby2 = proby2/max(proby2)
+proby3 = proby3/max(proby3)
+
+plot(x1,probx1)
+hold('on')
+plot(x4,probx4)
+title('Diffusion Walker 1D T = 0.01')
+legend('numerical with Gauss','without Gauss')
+xlabel('Position')
+ylabel('Solution')
+hardcopy('walk100.png')
+hold('off')
+
+plot(x2,probx2)
+hold('on')
+plot(x5,probx5)
+title('Diffusion Walker 1D T = 0.1')
+legend('numerical with Gauss','without Gauss')
+xlabel('Position')
+ylabel('Solution')
+hardcopy('diff1dt01sm.png')
+hold('off')
+
+plot(x3,probx3)
+hold('on')
+plot(x6,probx6)
+title('Diffusion Walker 1D T = 0.5')
+legend('numerical with gauss','without gauss')
+xlabel('Position')
+ylabel('Solution')
+hardcopy('diff1dt05sm.png')
+hold('off')
+

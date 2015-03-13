@@ -1,0 +1,16 @@
+#include <fstream>
+#include "CPhys.h"
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+using namespace CPhys;
+
+int main(int argc, const char *argv[])
+{	
+	Walker walker = MonteCarlo::getWalker(10000, 0.25, 10.0, 0.0001, 0, 1);
+	walker.useGauss(false);
+	walker.start2D();
+	walker.output();
+}
+

@@ -1,0 +1,38 @@
+from scitools.std import *
+from StringIO import StringIO
+
+data1 = loadtxt('../cpp/2DT0_1Exp.dat')
+#data2 = loadtxt('../cpp/probabilities.dat')
+#data3 = loadtxt('../cpp/euler2D.dat')
+#data4 = loadtxt('../cpp/euler2D1.dat')
+
+#i1,average,variance = data1.T
+#i2,probx, proby = data2.T
+x = linspace(0,1,len(data1))
+y = linspace(0,1,len(data1))
+t = 0.1
+def anal(x,y):
+	return (1-y)*exp(x+t)
+
+#let = linspace(0,1,len(data3))
+#let1 = linspace(0,1,len(data4))
+#probx = probx/max(probx)
+#proby = proby/max(proby)
+xv, yv = ndgrid(x,y)
+#diff = data3-data4
+pcolor(data1,shading='flat')
+colorbar()
+axis('equal')
+title('Implicit t=0.1 alpha = 0.75')
+xlabel('x-position')
+ylabel('y-position')
+hardcopy('test3.png')
+
+#figure()
+#mesh(xv, yv, anal(xv,yv))
+"""
+figure()
+pcolor(let, let, data3)
+axis='equal'
+"""
+

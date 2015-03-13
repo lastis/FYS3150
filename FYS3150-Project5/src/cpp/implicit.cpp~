@@ -1,0 +1,34 @@
+#include "CPhys.h"
+#include <iostream>
+#include <cmath>
+#include <fstream>
+#include <iomanip>
+
+using namespace std;
+using namespace CPhys;
+
+main()
+{
+	double dt, h, time, alpha = 0.25;
+	time = 0.1;
+	h = 0.01;
+	dt = alpha*h*h;
+	int N = int(1/h) + 1;
+
+
+	Matrix init = Matrix(N,N);
+	for(int j=0; j < N; j++){
+		for(int i=0; i < N; i++){
+			init(i,j) = (1-j*h)*exp(i*h);
+		}
+	}
+	Matrix solution = Diffusion::solveJacobi2D(init, time, dt, h);
+	ofstream outFile("Jacobi.dat");
+	for (int i=0; i < N; i++){
+		for (int j=0; j < N; j++){
+			outFile << setw(15) << setprecision(8) << solution(i,j);
+		}
+		outFile << endl;
+	}
+	outFile.close();
+}	
